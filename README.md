@@ -26,21 +26,35 @@ Next, migrate the database:
 $ rails db:migrate
 ```
 
-Next, add `review!` and `reviewable!` to your models:
+## Configuring Models
 
+### Configuring your model to use `review!`
+Add `review!` to your `Review` model and you will gain access to all the helper methods required.
 ```ruby
 class Review < ActiveRecord::Base
   review!
 end
+```
 
+### Configuring your model to use `review!`
+Add `reviewable!` to your `ObjectToReview` model and you will gain access to all the helper methods required.
+
+Additionally, you need to implement a couple methods to make reviewer play nicely with your application.
+```ruby
 class ObjectToReview < ActiveRecord::Base
   reviewable!
+  
+  # Methods to implement
+  def reviewers
+    # Array of users that need to review the object
+  end
 end
 ```
 
-### API
+## API
 
-#### review! Helper
+### review! Helper
+
 Classes that use the `review!` helper will now respond to the following methods:
 ```ruby
 # Scopes
@@ -63,7 +77,9 @@ Review.pending                  # returns all pending reviews
 @review.object_to_review        # Object being reviewed
 @review.user                    # User assigned to Review
 ```
-#### reviewable! Helper
+
+### reviewable! Helper
+
 Classes that use the `reviewable!` helper will now respond to the following methods:
 ```ruby
 # Scopes
