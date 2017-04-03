@@ -89,7 +89,7 @@ Review.pending                  # returns all pending reviews
 @review.reject!                 # only the user belonging to the Review can reject it
 @review.cancel!                 # cancels the review
 # Associations
-@review.object_to_review        # Object being reviewed
+@review.item                    # Object being reviewed
 @review.user                    # User assigned to Review
 ```
 
