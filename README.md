@@ -36,17 +36,22 @@ class Review < ActiveRecord::Base
 end
 ```
 
-### Configuring your model to use `review!`
-Add `reviewable!` to your `ObjectToReview` model and you will gain access to all the helper methods required.
+NOTE: By default, only the user associated with the Review can `accept!` and `reject!` a review, this can be disabled in `/config/initializers/reviewer.rb`.
+
+### Configuring your model to use `reviewable!`
+Add `reviewable!` to your `Model` (we will use `Paper` here) model and you will gain access to all the helper methods required.
 
 Additionally, you need to implement a couple methods to make reviewer play nicely with your application.
 ```ruby
-class ObjectToReview < ActiveRecord::Base
+class Paper < ActiveRecord::Base
   reviewable!
   
-  # Methods to implement
+  # You either need a association called :reviewers
+  # Note: you can change this in /config/initializers/reviewer.rb
+  has_many :reviewers
+  # Or you need a method called `reviewers` that returns an array of users.
   def reviewers
-    # Array of users that need to review the object
+    Reviewer.all
   end
 end
 ```
@@ -83,19 +88,47 @@ Review.pending                  # returns all pending reviews
 Classes that use the `reviewable!` helper will now respond to the following methods:
 ```ruby
 # Scopes
-ObjectToReview.draft            # returns all objects that have not been reviewed
-ObjectToReview.pending_review   # returns all objects with pending reviews
-ObjectToReview.rejected         # returns all objects with rejected reviews
-ObjectToReview.reviewed         # returns all objects that have been reviewed
+Paper.draft                     # returns all objects that have not been reviewed
+Paper.pending_review            # returns all objects with pending reviews
+Paper.rejected                  # returns all objects with rejected reviews
+Paper.reviewed                  # returns all objects that have been reviewed
 # Status
-@object.status                  # returns the status of the object
-@object.status?(status_name)    # returns boolean
-@object.draft?                  # returns true if there are no review (excluding cancelled reviews)
-@object.pending_review?         # returns true if there are reviews that have not been responded to
-@object.reviewed?               # returns true if all the reviews have been accepted
-@object.rejected?               # returns true if any review has been rejected
-@object.cancelable?             # returns true if the reviews can be cancelled
+@paper.status                   # returns the status of the object
+@paper.status?(status_name)     # returns boolean
+@paper.draft?                   # returns true if there are no review (excluding cancelled reviews)
+@paper.pending_review?          # returns true if there are reviews that have not been responded to
+@paper.reviewed?                # returns true if all the reviews have been accepted
+@paper.rejected?                # returns true if any review has been rejected
+@paper.reviewable?              # returns true if the object can be reviewed (does it have reviewers)
+@paper.cancelable?              # returns true if the reviews can be cancelled
 # Actions
-@object.review!                 # creates a Review for every reviewer
-@object.cancel!                 # cancels all reviews
+@paper.review!                  # creates a Review for every reviewer
+@paper.cancel!                  # cancels all reviews
+```
+
+## Example
+
+```ruby
+
+@paper = Paper.create(name: "My physics paper")
+# Add reviewers
+@paper.reviewers << User.create     # NOTE: Using a has_many relationship
+@paper.reviewers << User.create     # NOTE: Using a has_many relationship
+@paper.save
+
+# Let's ask our reviewers to review our paper
+@paper.review!                      # Creates a Review for every reviewer
+
+# Oh no! I made a mistake, luckily I can cancel my reviews!
+@paper.cancel!                      # Cancels all object reviews
+
+@paper.update(name: "My chemistry paper")
+# Thats better, now let's ask our reviewers to check it out again
+@paper.review!
+
+# NOTE: For this example I disabled only_user (see your /config/initializers/reviewer.rb file)
+# Accept the reviews
+@paper.reviews.each { |r| r.accept! }
+
+@paper.reviewed?                    # Should return true
 ```
