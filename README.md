@@ -11,10 +11,10 @@ Then run `bundle install`
 
 Next, you need to run the a couple generators.
 
-In the following command you need to replace `MODEL` with the class name of model you will use with your reviews (frequently `Review`). This adds `accepted_at`, `rejected_at`, `cancelled_at`, and `user_id` to the MODEL.
+In the following command you need to replace `MODEL` with the class name of model you will use with your reviews (frequently `Review`). This adds `accepted_at`, `rejected_at`, `cancelled_at`, and `user_id` to the MODEL. It also generate a initializer, if your user model is not User, you will want to head over to `/config/initializers/reviewer.rb` and modify the user model referenced.
 
 ```console
-$ rails g revpub:reviews MODEL
+$ rails g revpub:install MODEL
 ```
 
 Next, migrate the database:
