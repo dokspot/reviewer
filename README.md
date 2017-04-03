@@ -1,5 +1,5 @@
 # reviewer
-RevPub is the reviewing and publishing feature used in dokspot.
+reviewer is the reviewing feature used in dokspot.
 
 ## Usage
 revpub works with Rails 5 onwards. You can add it to your Gemfile with:
