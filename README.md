@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dokspot/reviewer.svg?branch=master)](https://travis-ci.org/dokspot/reviewer)
+
 # reviewer
 reviewer is the reviewing feature used in dokspot. It can be easily attached to any model and allows the model to be reviewed by users.
 
