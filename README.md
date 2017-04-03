@@ -1,5 +1,5 @@
 # reviewer
-reviewer is the reviewing feature used in dokspot.
+reviewer is the reviewing feature used in dokspot. It can be easily attached to any model and allows the model to be reviewed by users.
 
 ## Usage
 revpub works with Rails 5 onwards. You can add it to your Gemfile with:
