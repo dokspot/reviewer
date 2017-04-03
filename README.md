@@ -56,4 +56,7 @@ Review.pending                  # returns all pending reviews
 @review.accept                  # only the user belonging to the Review can accept it
 @review.reject                  # only the user belonging to the Review can reject it
 @review.cancel                  # cancels the review
+# Associations
+@review.object_to_review        # Object being reviewed
+@review.user                    # User assigned to Review
 ```
