@@ -7,7 +7,10 @@ revpub works with Rails 5 onwards. You can add it to your Gemfile with:
 gem 'reviewer', github: 'dokspot/reviewer'
 ```
 
-Then run `bundle install`
+Then run 
+```console
+$ bundle install
+```
 
 Next, you need to run the a couple generators.
 
