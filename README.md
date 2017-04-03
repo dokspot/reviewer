@@ -1,4 +1,4 @@
-# revpub
+# reviewer
 RevPub is the reviewing and publishing feature used in dokspot.
 
 ## Usage
@@ -23,9 +23,37 @@ Next, migrate the database:
 $ rails db:migrate
 ```
 
-Next, add revpub to your models:
+Next, add `review!` and `reviewable!` to your models:
+
 ```ruby
 class Review < ActiveRecord::Base
   review!
 end
+
+class ObjectToReview < ActiveRecord::Base
+  reviewable!
+end
+```
+
+### API
+
+#### review! Helper
+Classes that use the `review!` helper will now respond to the following methods:
+```ruby
+# Scopes
+Review.accepted                 # returns all accepted reviews
+Review.rejected                 # returns all rejected reviews
+Review.cancelled                # returns all cancelled reviews
+Review.pending                  # returns all pending reviews
+# Status
+@review.status                  # returns the status of a given review
+@review.status?(status_name)    # returns boolean
+@review.accepted?               # returns true if status == :accepted
+@review.rejected?               # returns true if status == :rejected
+@review.pending?                # returns true if status == :pending
+@review.cancelled?              # returns true if status == :cancelled
+# Actions
+@review.accept                  # only the user belonging to the Review can accept it
+@review.reject                  # only the user belonging to the Review can reject it
+@review.cancel                  # cancels the review
 ```
