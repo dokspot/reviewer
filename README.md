@@ -142,3 +142,6 @@ Paper.reviewed                  # returns all objects that have been reviewed
 
 @paper.reviewed?                    # Should return true
 ```
+
+## Testing
+We use [cucumber-rails](https://github.com/cucumber/cucumber-rails) for testing. We developed an extensive set of scenarios.
