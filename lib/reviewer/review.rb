@@ -38,19 +38,19 @@ module Reviewer
       def accept!
         success = update(accepted_at: Time.now, rejected_at: nil)
       rescue => e
-        puts e.message
+        e
       end
 
       def reject!
         update(rejected_at: Time.now, accepted_at: nil)
       rescue => e
-        puts e.message
+        e
       end
 
       def cancel!
-        update(cancelled_at: Time.now)
+        update(cancelled_at: Time.now) unless cancelled_at?
       rescue => e
-        puts e.message
+        e
       end
 
     end

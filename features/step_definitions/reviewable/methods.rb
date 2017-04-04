@@ -26,3 +26,7 @@ end
 Then(/^I expect the paper status not to be "([^"]*)"$/) do |status|
   expect(@paper.send("#{status}?".to_sym)).to be_falsy
 end
+
+When(/^I "([^"]*)" the paper$/) do |action|
+  @paper.send(action.to_sym)
+end

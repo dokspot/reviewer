@@ -9,7 +9,7 @@ module Reviewer
 
       def draft?
         # No reviews
-        reviews.empty?
+        reviews.empty? || reviews.pluck(:cancelled_at).all?
       end
 
       def rejected?
@@ -22,16 +22,16 @@ module Reviewer
         !draft? && reviews.pluck(:accepted_at).all?
       end
 
-      def pending_review?
+      def pending?
         # Not any of the above
         !draft? && !reviewed? && !rejected?
       end
 
       def status
-        return :draft           if draft?
-        return :rejected        if rejected?
-        return :pending_review  if pending_review?
-        return :reviewed        if reviewed?
+        return :draft     if draft?
+        return :rejected  if rejected?
+        return :pending   if pending?
+        return :reviewed  if reviewed?
       end
 
       def status?(query)
@@ -39,20 +39,21 @@ module Reviewer
       end
 
       def review!
+        raise ArgumentError, status if !draft?
         transaction do
           reviewers.each { |r| reviews.create(user: r) }
         end
       rescue => e
-        puts e.message
+        e
       end
 
       def cancel!
-        puts "Reviewable.cancel!"
+        raise ArgumentError, status if draft?
         transaction do
-          reviews.where(cancelled_at: nil).each { |r| r.update(cancelled_at: Time.now) }
+          reviews.each { |r| r.cancel! }
         end
       rescue => e
-        puts e.message
+        e
       end
 
     end
@@ -66,8 +67,8 @@ module Reviewer
         Object.const_get(name).all.select { |i| i.rejected? }
       end
 
-      def pending_review
-        Object.const_get(name).all.select { |i| i.pending_review? }
+      def pending
+        Object.const_get(name).all.select { |i| i.pending? }
       end
 
       def reviewed
