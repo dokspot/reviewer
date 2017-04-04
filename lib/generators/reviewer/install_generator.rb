@@ -11,5 +11,9 @@ module Reviewer
         def create_migration_file
             migration_template 'migration.rb', 'db/migrate/create_reviews.rb'
         end
+
+        def self.next_migration_number(dirname)
+            ActiveRecord::Generators::Base.next_migration_number(dirname)
+        end
     end
 end
