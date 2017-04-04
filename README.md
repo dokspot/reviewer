@@ -27,16 +27,6 @@ Next, migrate the database:
 ```console
 $ rails db:migrate
 ```
-## Configuring initializer
-Reviewer provides you with a couple custom configurations to get your application working the way you want. You can modify these options in `/config/initializers/reviewer.rb`. Please see these options below:
-```ruby
-Reviewer.config do |c|
-  c.user_only       = true        # Only the user associated with a review can approve! or reject! it
-  c.allowed_change  = false       # Whether a object can be updated while it is being reviewed
-  c.user_model      = :user       # Your user model
-  c.reviewers       = :reviewers  # Name of the association or method to query for the reviewers
-end
-```
 
 ## Configuring Models
 
@@ -147,3 +137,16 @@ Paper.reviewed                  # returns all objects that have been reviewed
 
 ## Testing
 We use [cucumber-rails](https://github.com/cucumber/cucumber-rails) for testing. We developed an extensive set of scenarios.
+
+## Future development
+
+### Configuring initializer
+Reviewer provides you with a couple custom configurations to get your application working the way you want. You can modify these options in `/config/initializers/reviewer.rb`. Please see these options below:
+```ruby
+Reviewer.config do |c|
+  c.user_only       = true        # Only the user associated with a review can approve! or reject! it
+  c.allowed_change  = false       # Whether a object can be updated while it is being reviewed
+  c.user_model      = :user       # Your user model
+  c.reviewers       = :reviewers  # Name of the association or method to query for the reviewers
+end
+```
