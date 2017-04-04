@@ -1,11 +1,18 @@
 require 'active_support/concern'
+require 'reviewer/status'
 
 module Reviewer
   module Reviewable
     extend ActiveSupport::Concern
+    include Reviewer::Status
 
     included do
+      # private_class_method :query
       has_many :reviews, as: :item
+
+      def states
+        [:draft, :rejected, :reviewed, :pending]
+      end
 
       def draft?
         # No reviews
@@ -27,16 +34,16 @@ module Reviewer
         !draft? && !reviewed? && !rejected?
       end
 
-      def status
-        return :draft     if draft?
-        return :rejected  if rejected?
-        return :pending   if pending?
-        return :reviewed  if reviewed?
-      end
+      # def status
+      #   return :draft     if draft?
+      #   return :rejected  if rejected?
+      #   return :pending   if pending?
+      #   return :reviewed  if reviewed?
+      # end
 
-      def status?(query)
-        send("#{query}?")
-      end
+      # def status?(query)
+      #   send("#{query}?")
+      # end
 
       def review!
         raise ArgumentError, status if !draft?
@@ -59,21 +66,30 @@ module Reviewer
     end
 
     class_methods do
+
       def draft
-        all.select { |i| i.draft? }
+        # all.select { |i| i.draft? }
+        query(:draft)
       end
 
       def rejected
-        all.select { |i| i.rejected? }
+        # all.select { |i| i.rejected? }
+        query(:rejected)
       end
 
       def pending
-        all.select { |i| i.pending? }
+        # all.select { |i| i.pending? }
+        query(:pending)
       end
 
       def reviewed
-        all.select { |i| i.reviewed? }
+        # all.select { |i| i.reviewed? }
+        query(:reviewed)
       end
+
+      # def query(status)
+      #   all.select { |i| i.send("#{status}?")}
+      # end
     end
 
   end
