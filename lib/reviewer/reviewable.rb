@@ -60,19 +60,19 @@ module Reviewer
 
     class_methods do
       def draft
-        Object.const_get(name).all.select { |i| i.draft? }
+        all.select { |i| i.draft? }
       end
 
       def rejected
-        Object.const_get(name).all.select { |i| i.rejected? }
+        all.select { |i| i.rejected? }
       end
 
       def pending
-        Object.const_get(name).all.select { |i| i.pending? }
+        all.select { |i| i.pending? }
       end
 
       def reviewed
-        Object.const_get(name).all.select { |i| i.reviewed? }
+        all.select { |i| i.reviewed? }
       end
     end
 

@@ -36,7 +36,7 @@ module Reviewer
       end
 
       def accept!
-        success = update(accepted_at: Time.now, rejected_at: nil)
+        update(accepted_at: Time.now, rejected_at: nil)
       rescue => e
         e
       end
@@ -57,19 +57,19 @@ module Reviewer
 
     class_methods do
       def accepted
-        Object.const_get(name).all.select { |i| i.accepted? }
+        all.select { |i| i.accepted? }
       end
 
       def rejected
-        Object.const_get(name).all.select { |i| i.rejected? }
+        all.select { |i| i.rejected? }
       end
 
       def pending
-        Object.const_get(name).all.select { |i| i.pending? }
+        all.select { |i| i.pending? }
       end
 
       def cancelled
-        Object.const_get(name).all.select { |i| i.cancelled? }
+        all.select { |i| i.cancelled? }
       end
     end
 

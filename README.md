@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/dokspot/reviewer.svg?branch=master)](https://travis-ci.org/dokspot/reviewer)
-
 # reviewer
+[![Build Status](https://travis-ci.org/dokspot/reviewer.svg?branch=master)](https://travis-ci.org/dokspot/reviewer)
+[![Code Climate](https://codeclimate.com/github/dokspot/reviewer.svg)](https://codeclimate.com/github/dokspot/reviewer)
 reviewer is the reviewing feature used in dokspot. It can be easily attached to any model and allows the model to be reviewed by users.
 
 ## Usage
@@ -9,7 +9,7 @@ revpub works with Rails 5 onwards. You can add it to your Gemfile with:
 gem 'reviewer', github: 'dokspot/reviewer'
 ```
 
-Then run 
+Then run
 ```console
 $ bundle install
 ```
@@ -47,7 +47,7 @@ Additionally, you need to implement a couple methods to make reviewer play nicel
 ```ruby
 class Paper < ActiveRecord::Base
   reviewable!
-  
+
   # You either need a association called :reviewers
   # Note: you can change this in /config/initializers/reviewer.rb
   has_many :reviewers
