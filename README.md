@@ -1,6 +1,7 @@
 # reviewer
 [![Build Status](https://travis-ci.org/dokspot/reviewer.svg?branch=master)](https://travis-ci.org/dokspot/reviewer)
 [![Code Climate](https://codeclimate.com/github/dokspot/reviewer.svg)](https://codeclimate.com/github/dokspot/reviewer)
+
 reviewer is the reviewing feature used in dokspot. It can be easily attached to any model and allows the model to be reviewed by users.
 
 ## Usage
