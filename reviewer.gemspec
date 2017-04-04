@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "reviewer"
   spec.version       = Reviewer::VERSION
   spec.authors       = ["cderche"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.email         = ["cyrille.derche@dokspot.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "reviewer is the reviewing feature used in dokspot."
+  spec.description   = "reviewer is the reviewing feature used in dokspot. It can be easily attached to any model and allows the model to be reviewed by users."
+  spec.homepage      = "http:///www.dokspot.com"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -32,4 +32,12 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "cucumber-rails"
+  spec.add_development_dependency "rspec-expectations"
+  spec.add_development_dependency "database_cleaner"
+  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "rails"
+  spec.add_development_dependency "activerecord"
+  spec.add_development_dependency "activesupport"
+  
 end
