@@ -15,12 +15,10 @@ Then run
 $ bundle install
 ```
 
-Next, you need to run the a couple generators.
-
-In the following command you need to replace `MODEL` with the class name of model you will use with your reviews (frequently `Review`). This adds `accepted_at`, `rejected_at`, `cancelled_at`, and `user_id` to the MODEL. It also generate a initializer, if your user model is not User, you will want to head over to `/config/initializers/reviewer.rb` and modify the user model referenced.
+Next, you need to run the generator. This creates a migration for the `reviews` table.
 
 ```console
-$ rails g reviewer:install MODEL
+$ rails g reviewer:install
 ```
 
 Next, migrate the database:
@@ -38,8 +36,6 @@ class Review < ActiveRecord::Base
   review!
 end
 ```
-
-NOTE: By default, only the user associated with the Review can `accept!` and `reject!` a review, this can be disabled in `/config/initializers/reviewer.rb`.
 
 ### Configuring your model to use `reviewable!`
 Add `reviewable!` to your `Model` (we will use `Paper` here) model and you will gain access to all the helper methods required.
@@ -138,16 +134,3 @@ Paper.reviewed                  # returns all objects that have been reviewed
 
 ## Testing
 We use [cucumber-rails](https://github.com/cucumber/cucumber-rails) for testing. We developed an extensive set of scenarios.
-
-## Future development
-
-### Configuring initializer
-Reviewer provides you with a couple custom configurations to get your application working the way you want. You can modify these options in `/config/initializers/reviewer.rb`. Please see these options below:
-```ruby
-Reviewer.config do |c|
-  c.user_only       = true        # Only the user associated with a review can approve! or reject! it
-  c.allowed_change  = false       # Whether a object can be updated while it is being reviewed
-  c.user_model      = :user       # Your user model
-  c.reviewers       = :reviewers  # Name of the association or method to query for the reviewers
-end
-```
