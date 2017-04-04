@@ -16,8 +16,8 @@ ActiveRecord::Base.establish_connection(
 
 ActiveRecord::Schema.define do
   create_table :reviews do |t|
-    t.integer     :user_id
-    t.integer     :item_id
+    t.belongs_to  :user,  index: true,  polymorphic: true
+    t.references  :item,  index: true,  polymorphic: true
     t.timestamp   :accepted_at
     t.timestamp   :rejected_at
     t.timestamp   :cancelled_at
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define do
   end
 
   create_table :users do |t|
-    t.integer     :paper_id
+    t.belongs_to  :paper, index: true
     t.timestamps  null: false
   end
 end
@@ -52,4 +52,11 @@ class User < ActiveRecord::Base
   belongs_to :paper
 end
 
-# Cucumber::Rails::Database.autorun_database_cleaner = true
+Before do
+  User.destroy_all
+  Paper.destroy_all
+  Review.destroy_all
+  expect(User.count).to eq(0)
+  expect(Paper.count).to eq(0)
+  expect(Review.count).to eq(0)
+end

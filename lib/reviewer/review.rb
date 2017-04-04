@@ -13,11 +13,11 @@ module Reviewer
       end
 
       def accepted?
-        accepted_at? && !cancelled?
+        accepted_at? && !cancelled? && !rejected_at?
       end
 
       def rejected?
-        rejected_at? && !cancelled?
+        rejected_at? && !cancelled? && !accepted_at?
       end
 
       def cancelled?
@@ -44,13 +44,13 @@ module Reviewer
       def reject!
         update(rejected_at: Time.now, accepted_at: nil)
       rescue => e
-        e
+        puts e.message
       end
 
       def cancel!
         update(cancelled_at: Time.now)
       rescue => e
-        e
+        puts e.message
       end
 
     end

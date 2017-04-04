@@ -8,24 +8,28 @@ module Reviewer
       has_many :reviews, as: :item
 
       def draft?
+        # No reviews
         reviews.empty?
       end
 
       def rejected?
-        !reviews.empty? && reviews.rejected.any?
-      end
-
-      def pending_review?
-        !reviewed? && !rejected?
+        # Min. 1 rejected review
+        !draft? && reviews.pluck(:rejected_at).any?
       end
 
       def reviewed?
-        reviews.any? && reviews.accepted.all?
+        # All reviews accepted
+        !draft? && reviews.pluck(:accepted_at).all?
+      end
+
+      def pending_review?
+        # Not any of the above
+        !draft? && !reviewed? && !rejected?
       end
 
       def status
         return :draft           if draft?
-        return :rejected        if accepted?
+        return :rejected        if rejected?
         return :pending_review  if pending_review?
         return :reviewed        if reviewed?
       end
@@ -35,21 +39,20 @@ module Reviewer
       end
 
       def review!
-        send(:before_review) if respond_to(:before_review)
         transaction do
-          reviewers.each { |r| reviews.create(user: a) }
+          reviewers.each { |r| reviews.create(user: r) }
         end
       rescue => e
-        e
+        puts e.message
       end
 
       def cancel!
-        send(:before_cancel) if respond_to(:before_cancel)
+        puts "Reviewable.cancel!"
         transaction do
           reviews.where(cancelled_at: nil).each { |r| r.update(cancelled_at: Time.now) }
         end
       rescue => e
-        e
+        puts e.message
       end
 
     end

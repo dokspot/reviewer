@@ -16,13 +16,13 @@ Then(/^I expect (\d+) Review "([^"]*)"$/) do |n, status|
   expect(Review.send(status).count).to eq(n.to_i)
 end
 
-Then(/^I expect the status to be "([^"]*)"$/) do |status|
+Then(/^I expect the review status to be "([^"]*)"$/) do |status|
   expect(@review.status).to eq(status.to_sym)
   expect(@review.status?(status.to_sym)).to be_truthy
   expect(@review.send("#{status}?".to_sym)).to be_truthy
 end
 
-Then(/^I expect the status not to be "([^"]*)"$/) do |status|
+Then(/^I expect the review status not to be "([^"]*)"$/) do |status|
   expect(@review.send("#{status}?".to_sym)).to be_falsy
 end
 
