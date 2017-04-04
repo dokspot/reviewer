@@ -5,7 +5,7 @@ module Reviewer
     extend ActiveSupport::Concern
 
     included do
-      # private_class_method :query
+      private_class_method :query
       # puts "states:"
       # puts "self.class.name: #{self.class.name}"
 
