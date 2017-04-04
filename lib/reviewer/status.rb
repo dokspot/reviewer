@@ -5,10 +5,12 @@ module Reviewer
     extend ActiveSupport::Concern
 
     included do
-      private_class_method :query
+      # private_class_method :query
+      # puts "states:"
+      # puts "self.class.name: #{self.class.name}"
 
       def status
-        states.each do |s|
+        self.class.states.each do |s|
           return s if status?(s)
         end
       end
@@ -20,6 +22,14 @@ module Reviewer
     end
 
     class_methods do
+      # def states
+      #   []
+      # end
+
+      # self.class.states.each do |s|
+      #   define_method(s, query(s))
+      # end
+
       def query(status)
         all.select { |i| i.send("#{status}?")}
       end

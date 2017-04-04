@@ -60,3 +60,11 @@ Before do
   expect(Paper.count).to eq(0)
   expect(Review.count).to eq(0)
 end
+
+Review.states.each do |s|
+  Review.define_singleton_method(s) { Review.query(s) }
+end
+
+Paper.states.each do |s|
+  Paper.define_singleton_method(s) { Paper.query(s) }
+end

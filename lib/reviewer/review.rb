@@ -10,10 +10,6 @@ module Reviewer
       belongs_to :item, polymorphic: true
       belongs_to :user, polymorphic: true
 
-      def states
-        [:pending, :rejected, :accepted, :cancelled]
-      end
-
       def pending?
         !accepted? && !rejected? && !cancelled?
       end
@@ -62,26 +58,29 @@ module Reviewer
     end
 
     class_methods do
-
-      def accepted
-        # all.select { |i| i.accepted? }
-        query(:accepted)
+      def states
+        [:pending, :rejected, :accepted, :cancelled]
       end
 
-      def rejected
-        # all.select { |i| i.rejected? }
-        query(:rejected)
-      end
-
-      def pending
-        # all.select { |i| i.pending? }
-        query(:pending)
-      end
-
-      def cancelled
-        # all.select { |i| i.cancelled? }
-        query(:cancelled)
-      end
+      # def accepted
+      #   # all.select { |i| i.accepted? }
+      #   query(:accepted)
+      # end
+      #
+      # def rejected
+      #   # all.select { |i| i.rejected? }
+      #   query(:rejected)
+      # end
+      #
+      # def pending
+      #   # all.select { |i| i.pending? }
+      #   query(:pending)
+      # end
+      #
+      # def cancelled
+      #   # all.select { |i| i.cancelled? }
+      #   query(:cancelled)
+      # end
     end
 
   end

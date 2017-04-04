@@ -10,10 +10,6 @@ module Reviewer
       # private_class_method :query
       has_many :reviews, as: :item
 
-      def states
-        [:draft, :rejected, :reviewed, :pending]
-      end
-
       def draft?
         # No reviews
         reviews.empty? || reviews.pluck(:cancelled_at).all?
@@ -66,26 +62,29 @@ module Reviewer
     end
 
     class_methods do
-
-      def draft
-        # all.select { |i| i.draft? }
-        query(:draft)
+      def states
+        [:draft, :rejected, :reviewed, :pending]
       end
 
-      def rejected
-        # all.select { |i| i.rejected? }
-        query(:rejected)
-      end
-
-      def pending
-        # all.select { |i| i.pending? }
-        query(:pending)
-      end
-
-      def reviewed
-        # all.select { |i| i.reviewed? }
-        query(:reviewed)
-      end
+      # def draft
+      #   # all.select { |i| i.draft? }
+      #   query(:draft)
+      # end
+      #
+      # def rejected
+      #   # all.select { |i| i.rejected? }
+      #   query(:rejected)
+      # end
+      #
+      # def pending
+      #   # all.select { |i| i.pending? }
+      #   query(:pending)
+      # end
+      #
+      # def reviewed
+      #   # all.select { |i| i.reviewed? }
+      #   query(:reviewed)
+      # end
 
       # def query(status)
       #   all.select { |i| i.send("#{status}?")}
