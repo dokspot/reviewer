@@ -37,6 +37,8 @@ class Review < ActiveRecord::Base
 end
 ```
 
+NOTE: We recommend that you use a gem such as [method_callbacks](https://github.com/MorganShowman/method_callbacks) if you want to run any authorisation checks before users are allowed to `accept!` or `reject!`.
+
 ### Configuring your model to use `reviewable!`
 Add `reviewable!` to your `Model` (we will use `Paper` here) model and you will gain access to all the helper methods required.
 
