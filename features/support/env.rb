@@ -28,6 +28,11 @@ ActiveRecord::Schema.define do
     t.string      :name
     t.timestamps  null: false
   end
+
+  create_table :users do |t|
+    t.integer     :paper_id
+    t.timestamps  null: false
+  end
 end
 
 class Review < ActiveRecord::Base
@@ -36,7 +41,15 @@ end
 
 class Paper < ActiveRecord::Base
   reviewable!
+  has_many :users
+
+  def reviewers
+    users
+  end
 end
 
 class User < ActiveRecord::Base
+  belongs_to :paper
 end
+
+# Cucumber::Rails::Database.autorun_database_cleaner = true
