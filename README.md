@@ -91,14 +91,14 @@ Classes that use the `reviewable!` helper will now respond to the following meth
 ```ruby
 # Scopes
 Paper.draft                     # returns all objects that have not been reviewed
-Paper.pending            # returns all objects with pending reviews
+Paper.pending                   # returns all objects with pending reviews
 Paper.rejected                  # returns all objects with rejected reviews
 Paper.reviewed                  # returns all objects that have been reviewed
 # Status
 @paper.status                   # returns the status of the object
 @paper.status?(status_name)     # returns boolean
 @paper.draft?                   # returns true if there are no review (excluding cancelled reviews)
-@paper.pending?          # returns true if there are reviews that have not been responded to
+@paper.pending?                 # returns true if there are reviews that have not been responded to
 @paper.reviewed?                # returns true if all the reviews have been accepted
 @paper.rejected?                # returns true if any review has been rejected
 @paper.reviewable?              # returns true if the object can be reviewed (does it have reviewers)
