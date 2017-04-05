@@ -1,12 +1,12 @@
 Feature: Validate actions work
 
 Scenario Outline: Review - actions
-  Given 1 reviews with the status <s1>
+  Given 1 reviews with the state <s1>
   When I <s6> the review
-  Then I expect the review status to be <s2>
-  And I expect the review status not to be <s3>
-  And I expect the review status not to be <s4>
-  And I expect the review status not to be <s5>
+  Then I expect the review state to be <s2>
+  And I expect the review state not to be <s3>
+  And I expect the review state not to be <s4>
+  And I expect the review state not to be <s5>
 
   Examples:
     | s1          | s2          | s3          | s4          | s5          | s6        |

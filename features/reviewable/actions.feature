@@ -1,12 +1,12 @@
 Feature: Validate actions work
 
 Scenario Outline: Reviewable - actions
-  Given 1 papers with the status <s1>
+  Given 1 papers with the state <s1>
   When I <s6> the paper
-  Then I expect the paper status to be <s2>
-  And I expect the paper status not to be <s3>
-  And I expect the paper status not to be <s4>
-  And I expect the paper status not to be <s5>
+  Then I expect the paper state to be <s2>
+  And I expect the paper state not to be <s3>
+  And I expect the paper state not to be <s4>
+  And I expect the paper state not to be <s5>
 
   Examples:
     | s1          | s2          | s3          | s4          | s5          | s6        |

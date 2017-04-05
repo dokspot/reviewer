@@ -15,7 +15,7 @@ end
 def create_p_rejected
   create_p_pending
   @review = @paper.reviews.first
-  expect { @review.reject! }.to change(@review, :status).from(:pending).to(:rejected)
+  expect { @review.reject! }.to change(@review, :state).from(:pending).to(:rejected)
   expect(@paper.rejected?).to be_truthy
 end
 

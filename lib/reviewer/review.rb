@@ -1,10 +1,10 @@
 require 'active_support/concern'
-require 'reviewer/status'
+require 'reviewer/states'
 
 module Reviewer
   module Review
     extend ActiveSupport::Concern
-    include Reviewer::Status
+    include Reviewer::States
 
     included do
       belongs_to :item, polymorphic: true
@@ -25,17 +25,6 @@ module Reviewer
       def cancelled?
         cancelled_at?
       end
-
-      # def status
-      #   return :pending   if pending?
-      #   return :accepted  if accepted?
-      #   return :rejected  if rejected?
-      #   return :cancelled if cancelled?
-      # end
-      #
-      # def status?(query)
-      #   send("#{query}?")
-      # end
 
       def accept!
         update(accepted_at: Time.now, rejected_at: nil)
@@ -59,26 +48,22 @@ module Reviewer
 
     class_methods do
       def states
-        [:pending, :rejected, :accepted, :cancelled]
+        super + [:pending, :rejected, :accepted, :cancelled]
       end
 
       def accepted
-        # all.select { |i| i.accepted? }
         query(:accepted)
       end
 
       def rejected
-        # all.select { |i| i.rejected? }
         query(:rejected)
       end
 
       def pending
-        # all.select { |i| i.pending? }
         query(:pending)
       end
 
       def cancelled
-        # all.select { |i| i.cancelled? }
         query(:cancelled)
       end
     end
