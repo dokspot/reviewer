@@ -8,9 +8,12 @@ module Reviewer
       private_class_method :query
 
       def state
+        # States set by the states method will have higher priority
+        active = nil
         self.class.states.each do |s|
-          return s if state?(s)
+          active = s if state?(s)
         end
+        active
       end
 
       def state?(query)
